@@ -45,14 +45,14 @@ Algoritmi që përdorim është **Dynamic Programming**, i cili ndihmon në ndar
 
   
 ### Pasi të ekzekutohet, programi do t'ju kërkojë:
-- **Numrin e matricave**
-- **Dimensionet e secilës matricë**
+- Numrin e matricave
+- Dimensionet e secilës matricë
 
 ### Pas përfundimit të llogaritjes, programi do të shfaqë:
 
--**Numrin minimal të shumëzimeve skalare.**
+- Numrin minimal të shumëzimeve skalare.
 
-- **Renditjen optimale të shumëzimit të matricave.**
+- Renditjen optimale të shumëzimit të matricave.
 
 ### Inputi dhe Outputi
 #### Input:
