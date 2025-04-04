@@ -14,7 +14,7 @@ def compute_matrix_chain(dimensions):
     costs = [[0] * (num_matrices + 1) for _ in range(num_matrices + 1)]
     splits = [[0] * (num_matrices + 1) for _ in range(num_matrices + 1)]
     
-    for chain_len in range(2, num_matrices + 1):  # Fillimi i gjatësi të zinxhirit
+    for chain_len in range(2, num_matrices + 1):  # Fillimi i gjatësise së zinxhirit
         for start in range(1, num_matrices - chain_len + 2):
             end = start + chain_len - 1
             costs[start][end] = float('inf')

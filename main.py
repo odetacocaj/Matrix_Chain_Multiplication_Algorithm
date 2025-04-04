@@ -14,4 +14,4 @@ costs, splits = compute_matrix_chain(dimensions)
 
 # Shfaqja e rezultateve
 print(f"Numri minimal i shumëzimeve skalar: {costs[1][num_matrices]}")
-print(f"Parentesizimi optimal: {format_optimal_order(splits, 1, num_matrices)}")
+print(f"Kllapezimi optimal: {format_optimal_order(splits, 1, num_matrices)}")
