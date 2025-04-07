@@ -1,0 +1,78 @@
+.matrix-chain-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.input-container {
+  flex: 1;
+  max-width: 500px;
+  padding-right: 30px;
+}
+
+.result-container {
+  flex: 1;
+  max-width: 500px;
+  padding-left: 30px;
+  background-color: #f4f4f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+}
+
+.input-container label,
+.result-container h2 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.input-container input {
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  background-color: #5c6bc0;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #3f51b5;
+}
+
+.submit-btn:disabled {
+  background-color: #c1c1c1;
+  cursor: not-allowed;
+}
+
+.matrix-input {
+  margin-bottom: 15px;
+}
+
+.result-container p {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #333;
+}
+
+.result-container strong {
+  color: #5c6bc0;
+}

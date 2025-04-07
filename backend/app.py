@@ -5,8 +5,8 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-# Enable CORS to allow cross-origin requests from React frontend
-CORS(app)
+# Enable CORS to allow cross-origin requests from React frontend on port 5173
+CORS(app, origins="http://localhost:5173")  # Adjusting the allowed origin
 
 @app.route('/matrix-chain', methods=['POST'])
 def matrix_chain():
