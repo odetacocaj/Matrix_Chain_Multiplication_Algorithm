@@ -1,35 +1,41 @@
-# main.py
 from flask import Flask, request, jsonify
 from matrix_chain import compute_matrix_chain
 from utils import format_optimal_order
+from flask_cors import CORS
 
 app = Flask(__name__)
 
-# Route to handle matrix chain multiplication
-@app.route('/api/calculate', methods=['POST'])
-def calculate():
-    # Get the matrix dimensions from the request body
+
+CORS(app, origins="http://localhost:5173")  
+
+@app.route('/matrix-chain', methods=['POST'])
+def matrix_chain():
+    
     data = request.get_json()
-    num_matrices = data.get('num_matrices', 0)
-    dimensions = data.get('dimensions', [])
+    dimensions = data['dimensions']
 
-    if num_matrices == 0 or not dimensions:
-        return jsonify({'error': 'Invalid input, please provide num_matrices and dimensions.'}), 400
+    if not dimensions or len(dimensions)==1:
+        return jsonify({'error': 'Invalid input, please provide valid dimensions.'}), 400
 
-    # Calculate the optimal multiplication order
+    
+    if len(dimensions) == 3:
+        min_cost = dimensions[0] * dimensions[1] * dimensions[2]
+        return jsonify({'min_cost': min_cost, 'optimal_order': '(A1 x A2)'})
+
+    
+    
     costs, splits = compute_matrix_chain(dimensions)
 
-    # Get the minimal number of scalar multiplications
-    min_multiplications = costs[0][num_matrices - 1]
+   
+    optimal_order = format_optimal_order(splits, 1, len(dimensions) - 1)
 
-    # Get the optimal order of multiplication
-    optimal_order = format_optimal_order(splits, 0, num_matrices - 1)
+   
+    result = {
+        "min_cost": costs[1][len(dimensions) - 1],
+        "optimal_order": optimal_order
+    }
 
-    # Return the results as JSON
-    return jsonify({
-        'min_multiplications': min_multiplications,
-        'optimal_order': optimal_order
-    })
+    return jsonify(result)
 
 if __name__ == '__main__':
     app.run(debug=True)

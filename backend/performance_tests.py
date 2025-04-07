@@ -1,7 +1,7 @@
 import time
 import random
+import psutil  # For memory usage
 import numpy as np
-import matplotlib.pyplot as plt
 from matrix_chain import compute_matrix_chain  # your function here
 
 # Function to test for different matrix sizes
@@ -9,44 +9,41 @@ def test_matrix_chain(num_matrices):
     # Generate random matrix dimensions (num_matrices + 1 dimensions)
     dimensions = [random.randint(10, 100) for _ in range(num_matrices + 1)]
     
-    start = time.perf_counter()  # Start time measurement
-    compute_matrix_chain(dimensions)
-    end = time.perf_counter()  # End time measurement
+    # Start measuring memory and time
+    process = psutil.Process()  # Get current process
+    start_time = time.perf_counter()  # Start time measurement
+    start_memory = process.memory_info().rss / (1024 * 1024)  # Start memory usage in MB
     
-    return end - start
+    compute_matrix_chain(dimensions)  # Run the algorithm
+    
+    end_time = time.perf_counter()  # End time measurement
+    end_memory = process.memory_info().rss / (1024 * 1024)  # End memory usage in MB
+    
+    time_taken = end_time - start_time  # Execution time in seconds
+    memory_used = end_memory - start_memory  # Memory used in MB
+    
+    return time_taken, memory_used
 
 # Matrix counts to test
 matrix_counts = [i for i in range(10, 101, 10)]  # Test from 10 to 100 matrices
 
-# Store execution times for each matrix count
+# Store execution times and memory usage for each matrix count
 execution_times = []
+memory_usages = []
 
 # Test each matrix count and repeat multiple times (e.g., 5 times) to average the results
 for count in matrix_counts:
     total_time = 0
+    total_memory = 0
     for _ in range(5):  # Repeat 5 times
-        total_time += test_matrix_chain(count)
+        time_taken, memory_used = test_matrix_chain(count)
+        total_time += time_taken
+        total_memory += memory_used
     execution_times.append(total_time / 5)  # Average time over 5 tests
+    memory_usages.append(total_memory / 5)  # Average memory over 5 tests
 
-# Plot the results to visualize the time complexity
-matrix_counts = np.array(matrix_counts)
-execution_times = np.array(execution_times)
-
-# Fit a cubic curve (polynomial of degree 3) to the data
-coeffs = np.polyfit(matrix_counts, execution_times, 3)
-poly = np.poly1d(coeffs)
-
-# Generate fitted values for the cubic curve
-fit_values = poly(matrix_counts)
-
-# Plot the measured times and cubic fit
-plt.figure(figsize=(8, 5))
-plt.plot(matrix_counts, execution_times, label="Measured times", marker='o', color='blue')
-plt.plot(matrix_counts, fit_values, label="Cubic fit (O(n^3))", color='red', linestyle='--')
-plt.title("Matrix Chain Multiplication - Time Complexity (Empirical)")
-plt.xlabel("Number of Matrices")
-plt.ylabel("Execution Time (seconds)")
-plt.legend()
-plt.grid(True)
-plt.tight_layout()
-plt.show()
+# Print the results in a tabular format
+print("Matrix Count | Avg Execution Time (s) | Avg Memory Usage (MB)")
+print("------------------------------------------------------------")
+for i in range(len(matrix_counts)):
+    print(f"{matrix_counts[i]:<13} | {execution_times[i]:<22} | {memory_usages[i]:<18}")

@@ -30,3 +30,6 @@ def compute_matrix_chain(dimensions):
                     splits[start][end] = split
     
     return costs, splits
+
+
+    
