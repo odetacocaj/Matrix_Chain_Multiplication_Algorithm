@@ -34,39 +34,71 @@ Algoritmi që përdorim është **Dynamic Programming**, i cili ndihmon në ndar
 
 - git clone https://github.com/username/matrix-chain-multiplication.git
 
-### Instaloni varësitë e nevojshme:
+### Instaloni varësitë e nevojshme në backend:
 
-- Ky projekt është i shkruar në Python dhe nuk ka varësi të jashtme të nevojshme, përveç Python 3. Sigurohuni që keni Python 3 të instaluar.
+- Navigoni në folderin e backend me komandën:
+  _cd backend_
+  
+- Ky projekt është i shkruar në Python prandaj sigurohuni që keni Python 3 të instaluar. Gjithashtu instaloni libraritë e nevojshme duke pwrdor komandën:
+  
+  _pip install -r requirements.txt_
 
 ### Ekzekutoni programin:
 
-- Pasi të keni shkarkuar skedarët, ekzekutoni programin me komandën:
+- Pasi të keni instaluar varësitë e nevojshme, ekzekutoni programin me komandën:
   _python main.py_
 
-  
-### Pasi të ekzekutohet, programi do t'ju kërkojë:
-- Numrin e matricave
-- Dimensionet e secilës matricë
+### Testoni programin:
 
-### Pas përfundimit të llogaritjes, programi do të shfaqë:
+- Testimi i backend-it të programit mund të bëhet duke përdorur Postman. Vendosni linkun e localhost dhe dërgoni një POST request, duke u siguruar se po dërgoni një listë të dimensioneve në body të kërekesës. Në JSON do të duket kështu:
+
+{
+  "dimensions": [10,20,30,40,50]
+}
+
+### Pas përfundimit të llogaritjes, programi do të kthej përgjigjie në JSON:
 
 - Numrin minimal të shumëzimeve skalare.
 
 - Renditjen optimale të shumëzimit të matricave.
 
-### Inputi dhe Outputi
+
+## Instruksionet për Frontend (React)
+- Ky projekt përfshin gjithashtu një ndërfaqe përdoruesi të ndërtuar me React, e cila komunikon me API-në e ndërtuar në Flask.
+
+### Setup për Frontend:
+
+#### Instalimi i frontend
+- Instalimi i frontend-it fillon me navigimin në folderin e duhur:
+  _cd frontend_
+- Vijoni me instalimin e varshmërive pwrmes komandws:
+  _npm install_
+#### Ekzekutimi i Frontend
+
+- Përdorni komandën:
+  _npm run dev_
+
+#### Komunikimi me backend  
+
+- Frontend-i dërgon një listë me dimensione përmes një POST request në http://localhost:5000/matrix-chain
+- Backend-i kthen një JSON me min_cost dhe optimal_order
+
 #### Input:
 
-- Lista p[] ku p[i] përfaqëson dimensionin e matricës A(i), që ka dimensionet p[i-1] x p[i].
-- Përdoruesi duhet të futë numrin e matricave dhe dimensionet e tyre.
+- Një fushë inputi ku përdoruesi vendos dimensionet (p.sh. 10 20 30 40)
+
+- Pas klikimit të butonit "Llogarit", të dhënat dërgohen në backend.
 
 #### Output:
 
-- m[][]: Tabela që përmban koston minimale të shumëzimeve për secilin grup matricash.
+- Shfaqet numri minimal i shumëzimeve
 
-- s[][]: Tabela që përmban informacion për ndarjen optimale të matricave.
-
-Shembuj të Inputeve dhe Outputeve
+- Shfaqet mënyra optimale e shumëzimit me kllapa, p.sh. ((A1 x A2) x A3)
 
 ## Testimi dhe Verifikimi
-- Ky projekt është testuar me një sërë rastesh për të verifikuar korrektësinë dhe performancën e algoritmit. Disa nga rezultatet e testeve janë:
+- Ky projekt është testuar me një sërë rastesh për të verifikuar korrektësinë dhe performancën e algoritmit. Disa nga testet janë:
+   - Input i zbrazet: Nëse nuk jepen dimensione matrice, algoritmi duhet të kthejë një mesazh gabimi.
+   - Matrica e vetme: Kur jepet si input vetëm një matricë, algoritmi duhet të kthejë zero shumëzime skalare, pasi nuk nevojitet shumëzim.
+   - Dy matrica: Algoritmi duhet të kthejë koston e shumëzimit të dy matricave. Nuk duhet të ketë nevojë për llogaritje të ndarjes sepse ekziston vetëm një mënyrë.
+   - Vlera negative të dimensioneve: Kur dimensionet janë negative ose zero, algoritmi duhet të kthejë një mesazh gabimi që informon përdoruesin se dimensionet duhet    të       jenë numra pozitivë.
+
