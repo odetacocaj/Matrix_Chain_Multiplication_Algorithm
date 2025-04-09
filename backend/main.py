@@ -5,31 +5,32 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-
 CORS(app, origins="http://localhost:5173")  
 
 @app.route('/matrix-chain', methods=['POST'])
 def matrix_chain():
-    
     data = request.get_json()
-    dimensions = data['dimensions']
+    dimensions = data.get('dimensions', [])
 
-    if not dimensions or len(dimensions)==1:
+    # Validate that the input is not empty and contains at least two dimensions
+    if not dimensions or len(dimensions) == 1:
         return jsonify({'error': 'Invalid input, please provide valid dimensions.'}), 400
 
-    
+    # Check if any dimension is negative
+    if any(d <= 0 for d in dimensions):  # Ensure all dimensions are positive
+        return jsonify({'error': 'Invalid input, dimensions must be positive numbers.'}), 400
+
+    # If exactly three dimensions, calculate the min_cost directly
     if len(dimensions) == 3:
         min_cost = dimensions[0] * dimensions[1] * dimensions[2]
         return jsonify({'min_cost': min_cost, 'optimal_order': '(A1 x A2)'})
 
-    
-    
+    # Compute the matrix chain multiplication
     costs, splits = compute_matrix_chain(dimensions)
 
-   
+    # Format the optimal order
     optimal_order = format_optimal_order(splits, 1, len(dimensions) - 1)
 
-   
     result = {
         "min_cost": costs[1][len(dimensions) - 1],
         "optimal_order": optimal_order

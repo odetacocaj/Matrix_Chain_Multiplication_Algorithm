@@ -1,10 +1,9 @@
 import time
 import random
-import psutil  # For memory usage
+import psutil  
 import numpy as np
-from matrix_chain import compute_matrix_chain  # your function here
+from matrix_chain import compute_matrix_chain  
 
-# Function to test for different matrix sizes
 def test_matrix_chain(num_matrices):
     # Generate random matrix dimensions (num_matrices + 1 dimensions)
     dimensions = [random.randint(10, 100) for _ in range(num_matrices + 1)]
@@ -31,16 +30,15 @@ matrix_counts = [i for i in range(10, 101, 10)]  # Test from 10 to 100 matrices
 execution_times = []
 memory_usages = []
 
-# Test each matrix count and repeat multiple times (e.g., 5 times) to average the results
 for count in matrix_counts:
     total_time = 0
     total_memory = 0
-    for _ in range(5):  # Repeat 5 times
+    for _ in range(5): 
         time_taken, memory_used = test_matrix_chain(count)
         total_time += time_taken
         total_memory += memory_used
-    execution_times.append(total_time / 5)  # Average time over 5 tests
-    memory_usages.append(total_memory / 5)  # Average memory over 5 tests
+    execution_times.append(total_time / 5) 
+    memory_usages.append(total_memory / 5)  
 
 # Print the results in a tabular format
 print("Matrix Count | Avg Execution Time (s) | Avg Memory Usage (MB)")
