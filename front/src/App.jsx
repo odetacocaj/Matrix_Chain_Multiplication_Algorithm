@@ -7,6 +7,7 @@ const MatrixChain = () => {
   const [dimensions, setDimensions] = useState([]);
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleMatrixChange = (index, value) => {
     const newDimensions = [...dimensions];
@@ -16,6 +17,8 @@ const MatrixChain = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
+    setResult(null);
+    setErrorMessage("");
     try {
       const response = await axios.post("http://127.0.0.1:5000/matrix-chain", {
         dimensions: dimensions,
@@ -23,6 +26,12 @@ const MatrixChain = () => {
       setResult(response.data);
     } catch (error) {
       console.error("Error:", error);
+
+      if (error.response && error.response.data && error.response.data.error) {
+        setErrorMessage(error.response.data.error);
+      } else {
+        setErrorMessage("Something went wrong. Please try again.");
+      }
     }
     setLoading(false);
   };
@@ -42,7 +51,6 @@ const MatrixChain = () => {
             />
           </label>
 
-          {/* Render the matrix inputs only if numMatrices is greater than 0 */}
           {numMatrices > 0 &&
             Array.from({ length: numMatrices }).map((_, index) => (
               <div key={index} className="matrix-input">
@@ -58,7 +66,6 @@ const MatrixChain = () => {
               </div>
             ))}
 
-          {/* Render the columns input only after number of matrices is entered */}
           {numMatrices > 0 && (
             <div className="matrix-input">
               <label>
@@ -76,6 +83,14 @@ const MatrixChain = () => {
           <button className="submit-btn" onClick={handleSubmit} disabled={loading}>
             {loading ? "Processing..." : "Submit"}
           </button>
+
+          {errorMessage && (
+            <div className="error-message">
+              <p style={{ color: "red" }}>
+                <strong>Error:</strong> {errorMessage}
+              </p>
+            </div>
+          )}
         </div>
 
         {result && (

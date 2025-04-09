@@ -76,3 +76,10 @@ h1 {
 .result-container strong {
   color: #5c6bc0;
 }
+.error-message {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border: 1px solid red;
+  background-color: #ffe6e6;
+  border-radius: 4px;
+}

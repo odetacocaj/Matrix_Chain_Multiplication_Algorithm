@@ -5,11 +5,11 @@ import numpy as np
 from matrix_chain import compute_matrix_chain  
 
 def test_matrix_chain(num_matrices):
-    # Generate random matrix dimensions (num_matrices + 1 dimensions)
+  
     dimensions = [random.randint(10, 100) for _ in range(num_matrices + 1)]
     
-    # Start measuring memory and time
-    process = psutil.Process()  # Get current process
+   
+    process = psutil.Process()  
     start_time = time.perf_counter()  # Start time measurement
     start_memory = process.memory_info().rss / (1024 * 1024)  # Start memory usage in MB
     
@@ -23,7 +23,7 @@ def test_matrix_chain(num_matrices):
     
     return time_taken, memory_used
 
-# Matrix counts to test
+
 matrix_counts = [i for i in range(10, 101, 10)]  # Test from 10 to 100 matrices
 
 # Store execution times and memory usage for each matrix count

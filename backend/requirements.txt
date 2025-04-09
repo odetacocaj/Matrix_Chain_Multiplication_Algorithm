@@ -1,0 +1,9 @@
+Flask==3.1.0
+flask-cors==5.0.1
+numpy==2.2.1
+psutil==7.0.0
+matplotlib==3.10.1
+
+
+
+
